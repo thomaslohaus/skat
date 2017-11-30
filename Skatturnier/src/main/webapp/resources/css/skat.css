@@ -1,0 +1,50 @@
+body    {
+	overflow-y:scroll !important;
+}
+
+table th {
+	text-align: center !important;
+}
+
+table td {
+	text-align: center !important;
+}
+
+.table-border-right {
+	border-right:  1px solid #d0d0d0;
+}
+
+.table-highlight-content {
+	font-weight: bold;
+}
+
+.dropdown-menu-list li {
+	text-align: center;
+}
+
+#sidenav-overlay {
+	z-index: 990 !important;
+}
+
+.login-card {
+	max-width: 500px;
+	margin-left: auto !important;
+	margin-right: auto !important;
+}
+
+.btn-full {
+	width: 100%;
+}
+
+.login-img {
+	height: 9rem !important;
+}
+
+.validation-error {
+	text-align: center;
+	color: red !important; 
+}
+
+.nav-border-left {
+	border-left:  1px solid #fff;
+}
