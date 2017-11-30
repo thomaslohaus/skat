@@ -1,6 +1,6 @@
-# Servir Web
+# Skatturnier
 
-Projeto de Administração de Bandeirantes
+Adminstrar campeonatos de Skat 
 ```
 mvn tomcat7:run
 ```
