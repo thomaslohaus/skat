@@ -27,7 +27,7 @@ table td {
 }
 
 .login-card {
-	max-width: 500px;
+	max-width: 700px;
 	margin-left: auto !important;
 	margin-right: auto !important;
 }
@@ -37,7 +37,7 @@ table td {
 }
 
 .login-img {
-	height: 9rem !important;
+	height: 7rem !important;
 }
 
 .validation-error {

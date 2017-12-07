@@ -24,7 +24,6 @@ public class LoginInterceptor {
 		this.result = result;
 		this.controllerMethod = controllerMethod;
 		this.jogadorLogado = jogadorLogado;
-		
 	}
 	
 	@Accepts
@@ -37,7 +36,7 @@ public class LoginInterceptor {
 		if (jogadorLogado.isLogado()) {
 			stack.next();
 		} else {
-			result.redirectTo(LoginController.class).form();
+			result.redirectTo(LoginController.class).login();
 		}
 	}
 }

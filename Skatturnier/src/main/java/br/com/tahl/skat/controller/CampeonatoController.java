@@ -40,9 +40,15 @@ public class CampeonatoController {
 		result.include("campeonatos", campeonatoDao.listar());
 	}
 
-	@Path(value= {"/campeonato/editar/{id}/", "/campeonato/editar/{id}", "/campeonato/editar/", "/campeonato/editar"})
-	public void editar(int id) {
-		result.include("campeonato", campeonatoDao.carregar(id));
+	@Path(value= {"/campeonato/novo/", "/campeonato/novo"})
+	public void novo() {
+		result.redirectTo(this).info(0);
+	}
+	
+	@Path(value= {"/campeonato/info/{id}/", "/campeonato/info/{id}"})
+	public void info(int id) {
+		if (id > 0)
+			result.include("campeonato", campeonatoDao.carregar(id));
 	}
 	
 	public void salvar(Campeonato campeonato) {
@@ -70,6 +76,4 @@ public class CampeonatoController {
 		}
 		result.include("campeonato", campeonato);
 	}
-	
-
 }

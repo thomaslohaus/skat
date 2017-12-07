@@ -3,7 +3,11 @@
   <display-name>Skatturnier</display-name>
   <context-param>
     <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
-    <param-value>messages</param-value>
+    <param-value>br.com.tahl.skat.messages.messages</param-value>
+  </context-param>
+  <context-param>
+    <param-name>br.com.caelum.vraptor.environment</param-name>
+    <param-value>PRODUCTION</param-value>
   </context-param>
   <listener>
     <listener-class>org.jboss.weld.environment.servlet.Listener</listener-class>

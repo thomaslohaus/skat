@@ -3,14 +3,18 @@ package br.com.tahl.skat.model;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import br.com.tahl.skat.utils.Idioma;
+
 @SuppressWarnings("serial")
 @Entity
 public class Jogador implements Serializable {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -19,6 +23,8 @@ public class Jogador implements Serializable {
 	private String email;
 	private String login;
 	private String senha;
+	@Enumerated(EnumType.STRING)
+	private Idioma idioma;
 
 	public Jogador() {
 	}
@@ -50,7 +56,7 @@ public class Jogador implements Serializable {
 	public void setSobrenome(String sobrenome) {
 		this.sobrenome = sobrenome;
 	}
-	
+
 	public String getNomeCompleto() {
 		return nome + " " + sobrenome;
 	}
@@ -77,6 +83,14 @@ public class Jogador implements Serializable {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+
+	public Idioma getIdioma() {
+		return idioma;
+	}
+
+	public void setIdioma(Idioma idioma) {
+		this.idioma = idioma;
 	}
 
 }

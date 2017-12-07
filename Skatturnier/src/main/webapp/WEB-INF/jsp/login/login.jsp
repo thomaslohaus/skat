@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -19,13 +20,7 @@
 		<link rel="stylesheet" href="<c:url value="/resources/css/skat.css"/>">
 	</head>
 	<body class="cyan">
-		<!-- Start Page Loading -->
-		<div id="loader-wrapper">
-			<div id="loader"></div>        
-			<div class="loader-section section-left"></div>
-			<div class="loader-section section-right"></div>
-		</div>
-		<!-- End Page Loading -->
+		<fmt:setLocale value="${locale}"/>
 		
 		<div class="container ">
 			<div class="card login-card">
@@ -33,21 +28,24 @@
 					<form action="${linkTo[LoginController].autenticar(null, null)}" method="post">
 						<div class="container">
 							<div class="row">
-								<div class="input-field col s12 center">
+								<div class="col s3 center">
 									<img src="<c:url value="/resources/img/logo.png"/>" class="responsive-img login-img ">
-									<h5 class="center">SKATTURNIER</h5>
+								</div>
+								<div class="col s9 center">
+									<h6 class="center"><fmt:message key="login.lbl.saudacao"/></h6>
+									<h5 class="center"><fmt:message key="login.lbl.titulo-aplicacao"/></h5>
 								</div>
 							</div>
 							<div class="row">
 								<div class="input-field col s12">
 									<i class="material-icons prefix">person_outline</i>
 									<input type="text" id="login" name="login" value="${login}">
-									<label for="login">E-mail ou Login</label>
+									<label for="login"><fmt:message key="login.txt.login"/></label>
 								</div>
 								<div class="input-field col s12">
 									<i class="material-icons prefix">lock_outline</i>
 									<input type="password" id="senha" name="senha">
-									<label for="senha">Senha</label>
+									<label for="senha"><fmt:message key="login.txt.senha"/></label>
 								</div>
 							</div>
 							<div class="row">
@@ -55,7 +53,7 @@
 							</div>
 							<div class="row">
 								<div class="input-field col s12">
-									<button class="waves-effect waves-light btn-large btn-full pink" type="submit">Login</button>
+									<button class="waves-effect waves-light btn-large btn-full pink" type="submit"><fmt:message key="login.btn.login"/></button>
 								</div>
 							</div>
 						</div>
@@ -64,48 +62,25 @@
 				<div class="card-action">
 					<div class="row center-align">
 						<div class="col s6">
-							<a href="#">Criar conta</a>
+							<a href="#"><fmt:message key="login.btn.criar-conta"/></a>
 						</div>
 						<div class="col s6">
-							<a href="#">Esqueceu a senha?</a>
+							<a href="${linkTo[LoginController].esqueceuSenha(locale)}"><fmt:message key="login.btn.esqueceu-senha"/></a>
 						</div>
+					</div>
+					<div class="row center-align">
+						<c:forEach items="${idiomas}" var="idioma">
+							<c:if test="${idioma.sigla != locale}">
+								<a href="${linkTo[LoginController].login(idioma.sigla)}">
+									<img src="<c:url value="/resources/img/${idioma.iconeBandeira}"/>">
+								</a>
+							</c:if>
+						</c:forEach>
 					</div>
 				</div>
 			</div>
 		</div>
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		<!-- 
-		
-		
-		
-		<form action="${linkTo[LoginController].autenticar(null, null)}" method="post">
-			<div class="container">
-				<div class="col s12 m7">
-					<div class="card small">
-						<div class="container">
-							<div class="row">
-								<div class="input-field">
-									<input type="text" id="login" name="login"">
-									<label for="login">Login</label>
-								</div>
-							</div>
-							
-							
-						</div>
-					</div>
-				</div>
-			</div>
-		</form>
-		 -->
-		
+
 		<!-- jQuery -->
 		<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 		

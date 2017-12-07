@@ -54,7 +54,16 @@ public class JogadorDao {
 		} catch (NoResultException nre) {
 			return null;
 		}
-		
 	}
 	
+	public Jogador obterPorLogin(String login) {
+		try {
+			TypedQuery<Jogador> query = manager.createQuery("select j from Jogador j where (j.login = :login or j.email = :loginEmail)", Jogador.class);
+			query.setParameter("login", login);
+			query.setParameter("loginEmail", login);
+			return query.getSingleResult();
+		} catch (NoResultException nre) {
+			return null;
+		}
+	}
 }

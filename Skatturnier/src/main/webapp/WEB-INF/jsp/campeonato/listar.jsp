@@ -12,7 +12,7 @@
 				<h2>Campeonatos</h2>
 			</div>
 			<div class="col s4">
-				<a class="btn-floating btn-large waves-effect waves-light pink" href="${linkTo[CampeonatoController].editar(0)}"><i class="material-icons">add</i></a>
+				<a class="btn-floating btn-large waves-effect waves-light pink" href="${linkTo[CampeonatoController].novo()}"><i class="material-icons">add</i></a>
 			</div>
 		</div>
 		<div class="row">
@@ -35,7 +35,7 @@
 							<td><fmt:formatDate pattern="dd/MM/yyyy" value="${campeonato.dataFim.time}" /></td>
 							<td>
 								<a class="btn-floating blue" href="#"><i class="material-icons">event_note</i></a>
-								<a class="btn-floating yellow darken-1" href="${linkTo[CampeonatoController].editar(campeonato.id)}"><i class="material-icons">edit</i></a>
+								<a class="btn-floating yellow darken-1" href="${linkTo[CampeonatoController].info(campeonato.id)}"><i class="material-icons">edit</i></a>
 								<a class="btn-floating green" href="${linkTo[CampeonatoController].gerenciar(campeonato.id)}"><i class="material-icons">send</i></a>
 							</td>
 						</tr>
