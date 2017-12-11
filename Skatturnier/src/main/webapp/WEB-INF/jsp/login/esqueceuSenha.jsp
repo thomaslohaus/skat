@@ -20,21 +20,28 @@
 		<link rel="stylesheet" href="<c:url value="/resources/css/skat.css"/>">
 	</head>
 	<body class="cyan">
-		<fmt:setLocale value="${locale}"/>
+		<fmt:setLocale value="${idioma}"/>
 		
 		<div class="container ">
 			<div class="card login-card">
 				<div class="card-content">
-					<form action="${linkTo[LoginController].enviarNovaSenha(null)}" method="post">
+					<form action="${linkTo[LoginController].enviarNovaSenha(null, null, null)}" method="post">
+						<input type="hidden" name="idioma" value="${idioma}">
 						<div class="container">
 							<div class="row">
 								<div class="col s3 center">
-									<img src="<c:url value="/resources/img/logo.png"/>" class="responsive-img login-img ">
+									<a href="${linkTo[LoginController].login(idioma)}">
+										<img src="<c:url value="/resources/img/logo.png"/>" class="responsive-img login-img">
+									</a>
 								</div>
 								<div class="col s9 center">
 									<h6 class="center"><fmt:message key="login.lbl.saudacao"/></h6>
 									<h5 class="center"><fmt:message key="login.lbl.titulo-aplicacao"/></h5>
 								</div>
+							</div>
+							<div class="section center">
+								<p class="center"><fmt:message key="login.lbl.esqueceu-senha"/></p>
+								<p class="center"><fmt:message key="login.lbl.nova-senha-descricao"/></p>
 							</div>
 							<div class="row">
 								<div class="input-field col s12">
@@ -42,37 +49,24 @@
 									<input type="text" id="login" name="login" value="${login}">
 									<label for="login"><fmt:message key="login.txt.login"/></label>
 								</div>
-								<div class="input-field col s12">
-									<i class="material-icons prefix">lock_outline</i>
-									<input type="password" id="senha" name="senha">
-									<label for="senha"><fmt:message key="login.txt.senha"/></label>
-								</div>
 							</div>
 							<div class="row">
 								<p class="validation-error">${errors.from('login_invalido')} ${errors.from('login_campos_vazios')}</p>
 							</div>
 							<div class="row">
-								<div class="input-field col s12">
-									<button class="waves-effect waves-light btn-large btn-full pink" type="submit"><fmt:message key="login.btn.login"/></button>
+								<div class="input-field col l6 push-l6 m12">
+									<button class="waves-effect waves-light btn-large btn-full pink" type="submit" name="tipo" value="nova">
+										<fmt:message key="login.btn.nova-senha-email"/>
+									</button>
+								</div>
+								<div class="input-field col l6 pull-l6 m12">
+									<button class="waves-effect waves-light btn-large btn-full pink" type="submit" name="tipo" value="admin">
+										<fmt:message key="login.btn.nova-senha-admin"/>
+									</button>
 								</div>
 							</div>
 						</div>
 					</form>
-				</div>
-				<div class="card-action">
-					<div class="row center-align">
-						<div class="col s6">
-							<a href="#"><fmt:message key="login.btn.criar-conta"/></a>
-						</div>
-						<div class="col s6">
-							<a href="#"><fmt:message key="login.btn.esqueceu-senha"/></a>
-						</div>
-					</div>
-					<div class="row center-align">
-						<c:forEach items="${idiomas}" var="idioma">
-							<a href="${linkTo[LoginController].login(idioma.sigla)}"><img src="<c:url value="/resources/img/${idioma.iconeBandeira}"/>"></a>
-						</c:forEach>
-					</div>
 				</div>
 			</div>
 		</div>

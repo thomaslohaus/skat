@@ -1,4 +1,4 @@
-package br.com.tahl.skat.utils;
+package br.com.tahl.skat.utils.idioma;
 
 public enum Idioma {
 	ALEMAO ("Deutsch", "de", "bandeira-alemanha.png"),
@@ -25,5 +25,9 @@ public enum Idioma {
 
 	public String getIconeBandeira() {
 		return iconeBandeira;
+	}
+	
+	public static Idioma getIdiomaPadrao() {
+		return Idioma.PORTUGUES;
 	}
 }

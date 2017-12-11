@@ -1,17 +1,18 @@
 package br.com.tahl.skat.controller;
 
+import java.io.IOException;
 import java.util.Locale;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.mail.Email;
 import org.apache.commons.mail.EmailException;
-import org.apache.commons.mail.SimpleEmail;
+import org.apache.commons.mail.HtmlEmail;
 
 import br.com.caelum.vraptor.Controller;
 import br.com.caelum.vraptor.Path;
 import br.com.caelum.vraptor.Result;
+import br.com.caelum.vraptor.freemarker.Freemarker;
 import br.com.caelum.vraptor.simplemail.AsyncMailer;
 import br.com.caelum.vraptor.validator.SimpleMessage;
 import br.com.caelum.vraptor.validator.Validator;
@@ -20,9 +21,10 @@ import br.com.tahl.skat.model.Jogador;
 import br.com.tahl.skat.security.JogadorLogado;
 import br.com.tahl.skat.security.LoginSenhaNuloVazioException;
 import br.com.tahl.skat.security.Open;
-import br.com.tahl.skat.utils.Idioma;
-import br.com.tahl.skat.utils.LanguageUtils;
 import br.com.tahl.skat.utils.LoginUtils;
+import br.com.tahl.skat.utils.idioma.Idioma;
+import br.com.tahl.skat.utils.idioma.IdiomaUtils;
+import freemarker.template.TemplateException;
 
 @Controller
 public class LoginController {
@@ -35,45 +37,47 @@ public class LoginController {
 	private JogadorDao jogadorDao;
 	private JogadorLogado jogadorLogado;
 	private AsyncMailer mailer;
+	private Freemarker freemarker;
 
 	public LoginController() {}
 	
 	@Inject
 	public LoginController(Result result, HttpServletRequest request, Validator validator, 
-			JogadorDao jogadorDao, JogadorLogado jogadorLogado, AsyncMailer mailer) {
+			JogadorDao jogadorDao, JogadorLogado jogadorLogado, AsyncMailer mailer, Freemarker freemarker) {
 		this.result = result;
 		this.request = request;
 		this.validator = validator;
 		this.jogadorDao = jogadorDao;
 		this.jogadorLogado = jogadorLogado;
 		this.mailer = mailer;
+		this.freemarker = freemarker;
 	}
 	
 	@Open
 	@Path("/")
 	public void login() {
 		String acceptLanguage = request.getHeader("accept-language");
-		Locale locale = LanguageUtils.getMainLocaleFromAcceptLanguage(acceptLanguage);
+		Locale locale = IdiomaUtils.getLocalePrincipalAcceptLanguage(acceptLanguage);
 		result.redirectTo(this).login(locale.toString().substring(0, 2));
 	}
 	
 	@Open
 	@Path(value= {"/login/{idioma}", "/login/{idioma}/"})
 	public void login(String idioma) {
-		result.include("locale", idioma);
+		result.include("idioma", idioma);
 		result.include("idiomas", Idioma.values());
 	}
 	
 	@Open
 	@Path(value= {"/esqueceu-senha/{idioma}", "/esqueceu-senha/{idioma}/"})
 	public void esqueceuSenha(String idioma) {
-		result.include("locale", idioma);
+		result.include("idioma", idioma);
 	}
 	
 	@Open
 	@Path(value= {"/nova-conta/{idioma}", "/nova-conta/{idioma}/"})
 	public void novaConta(String idioma) {
-		result.include("locale", idioma);
+		result.include("idioma", idioma);
 	}
 	
 	@Open
@@ -108,25 +112,32 @@ public class LoginController {
 		Idioma idioma = jogadorLogado.getJogador().getIdioma();
 		jogadorLogado.desloga();
 		if (idioma == null)
-			idioma = Idioma.PORTUGUES;
+			idioma = Idioma.getIdiomaPadrao();
 		result.redirectTo(this).login(idioma.getSigla());
 	}
 	
 	@Open
 	@Path("/enviarNovaSenha")
-	public void enviarNovaSenha(String login) throws EmailException {
+	public void enviarNovaSenha(String login, String tipo, String idioma) throws EmailException, IOException, TemplateException {
+	
+		//TODO encapsular envio
 		Jogador jogador = jogadorDao.obterPorLogin(login);
 		if (jogador != null) {
 			String emailAddress = jogador.getEmail();
 			if (emailAddress != null && !emailAddress.trim().isEmpty()) {
-				Email email = new SimpleEmail();
-				email.setSubject("Skat || Nova Senha");
-				email.addTo("thomas.lohaus@gmail.com");
-				email.setMsg("Teste de mensagem");
+
+				String emailBody = freemarker.use("teste").with("title", "TESTE").with("usuario", jogador).getContent();
 				
+				HtmlEmail email = new HtmlEmail();
+				email.setSubject("Skat || Nova Senha");
+				email.addTo(emailAddress);
+				email.setHtmlMsg(emailBody);
 				mailer.asyncSend(email);
 				
-				result.forwardTo(this).login();
+				
+
+				result.include("mensagemNovaSenha", "Nova senha enviada por e-mail.");
+				result.redirectTo(this).login();
 			} else {
 				//TODO
 			}

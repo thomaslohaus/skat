@@ -1,10 +1,11 @@
-package br.com.tahl.skat.utils;
+package br.com.tahl.skat.utils.idioma;
 
 import java.util.Locale;
+import java.util.ResourceBundle;
 
-public class LanguageUtils {
+public class IdiomaUtils {
 	
-	public static Locale[] getLocaleFromAcceptLanguage(String acceptLanguage) {
+	public static Locale[] getLocaleAcceptLanguage(String acceptLanguage) {
 		String[] languages = acceptLanguage.split(",");
 		int len = languages.length;
 		Locale[] locales = new Locale[len];
@@ -27,10 +28,15 @@ public class LanguageUtils {
 		return locales;
 	}
 	
-	public static Locale getMainLocaleFromAcceptLanguage(String acceptLanguage) {
-		Locale[] l = getLocaleFromAcceptLanguage(acceptLanguage);
-		
+	public static Locale getLocalePrincipalAcceptLanguage(String acceptLanguage) {
+		Locale[] l = getLocaleAcceptLanguage(acceptLanguage);
 		return l.length > 0 ? l[0] : null;
 	}
 	
+	public static String getTraducao(String chave, String idioma) {
+		Locale locale = new Locale(idioma);
+		ResourceBundle rb = ResourceBundle.getBundle("br.com.tahl.skat.messages.messages", locale);
+		
+		return rb.getString(chave);
+	}
 }

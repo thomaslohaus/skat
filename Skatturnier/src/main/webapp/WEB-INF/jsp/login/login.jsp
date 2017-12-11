@@ -20,7 +20,7 @@
 		<link rel="stylesheet" href="<c:url value="/resources/css/skat.css"/>">
 	</head>
 	<body class="cyan">
-		<fmt:setLocale value="${locale}"/>
+		<fmt:setLocale value="${idioma}"/>
 		
 		<div class="container ">
 			<div class="card login-card">
@@ -48,8 +48,13 @@
 									<label for="senha"><fmt:message key="login.txt.senha"/></label>
 								</div>
 							</div>
-							<div class="row">
+							<div>
 								<p class="validation-error">${errors.from('login_invalido')} ${errors.from('login_campos_vazios')}</p>
+							</div>
+							
+							<div class="alert alert-success alert-hide-on-empty">
+								<p>${mensagemNovaSenha}</p>
+								<span><i class="material-icons close-alert">close</i></span>
 							</div>
 							<div class="row">
 								<div class="input-field col s12">
@@ -65,14 +70,14 @@
 							<a href="#"><fmt:message key="login.btn.criar-conta"/></a>
 						</div>
 						<div class="col s6">
-							<a href="${linkTo[LoginController].esqueceuSenha(locale)}"><fmt:message key="login.btn.esqueceu-senha"/></a>
+							<a href="${linkTo[LoginController].esqueceuSenha(idioma)}"><fmt:message key="login.btn.esqueceu-senha"/></a>
 						</div>
 					</div>
 					<div class="row center-align">
-						<c:forEach items="${idiomas}" var="idioma">
-							<c:if test="${idioma.sigla != locale}">
-								<a href="${linkTo[LoginController].login(idioma.sigla)}">
-									<img src="<c:url value="/resources/img/${idioma.iconeBandeira}"/>">
+						<c:forEach items="${idiomas}" var="i">
+							<c:if test="${i.sigla != idioma}">
+								<a href="${linkTo[LoginController].login(i.sigla)}">
+									<img src="<c:url value="/resources/img/${i.iconeBandeira}"/>">
 								</a>
 							</c:if>
 						</c:forEach>

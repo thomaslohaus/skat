@@ -62,4 +62,16 @@ $(function() {
 	$(".dropdown-button").dropdown();
 	$(".button-collapse").sideNav();
 	$('select').material_select();
+	alertHideOnEmpty();
+});
+
+function alertHideOnEmpty() {
+	var text = $('.alert-hide-on-empty').find("p").text();
+	if (!text) {
+		$('.alert-hide-on-empty').addClass('hidden');
+	}
+}
+
+$(".close-alert").click(function() {
+	$(this).parent().parent().addClass('hidden');
 });

@@ -9,7 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import br.com.tahl.skat.utils.Idioma;
+import br.com.tahl.skat.utils.idioma.Idioma;
 
 @SuppressWarnings("serial")
 @Entity
