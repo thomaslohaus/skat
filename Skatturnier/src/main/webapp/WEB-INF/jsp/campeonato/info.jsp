@@ -6,15 +6,28 @@
 
 <c:import url="/WEB-INF/jsp/header.jsp" />
 
-<body>
+<main>
 	<div class="container">
-		<form method="post" action="${linkTo[CampeonatoController].salvar(null)}">
+		<form method="post" action="${linkTo[CampeonatoController].salvar(null, null)}">
 			<input type="hidden" name="campeonato.id" value="${campeonato.id}">
 			<input type="hidden" value="${fn:length(campeonato.rodadas)}">
 			
+			<div class="row valign-wrapper">
+				<div class="col s8">
+					<h2 id="titulo">${campeonato.nome}</h2>
+				</div>
+				<div class="col s4 right-align">
+					<button class="btn-floating btn-large waves-effect waves-light pink" type="submit" name="tipo" value="salvar">
+						<i class="material-icons">save</i>
+					</button>
+				</div>
+			</div>
+			<div class="row center-align">
+				
+			</div>
 			<div class="row">
 				<div class="input-field col m12 l6">
-					<input type="text" id="nome" name="campeonato.nome" value="${campeonato.nome}">
+					<input type="text" id="nome" name="campeonato.nome" value="${campeonato.nome}" onkeyup="copiarTitulo(this)">
 					<label for="nome">Nome</label>
 				</div>
 				<div class="input-field col m12 l6">
@@ -38,13 +51,39 @@
 					<label for="numeroRodadas">Número de Rodadas</label>
 				</div>
 			</div>
-			
-			<div class="fixed-action-btn">
-				<button class="btn-floating btn-large halfway-fab waves-effect waves-light pink" type="submit"><i class="material-icons">save</i></button>
+			<div class="row">
+				<a class="waves-effect waves-light btn" name="tipo" value="rodada">Gerar Rodadas</a>
+			</div>
+			<div class="divider"></div>
+			<div class="section">
+				<h5>Rodadas</h5>
+				<table class="responsive-table">
+				<thead>
+					<tr>
+						<th class="width-10">#</th>
+						<th class="width-20">Data</th>
+						<th>Local</th>
+						<th class="width-20">Nr Séries</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach items="${campeonato.rodadas}" var="rodada" varStatus="r">
+						<tr style="text-align: center">
+							<input type="hidden" name="campeonato.rodadas[${r.index}].id" value="${rodada.id}" />
+							<input type="hidden" name="campeonato.rodadas[${r.index}].numero" value="${rodada.numero}" />
+							<td>${rodada.numero}</td>
+							<td><input type="text" class="datepicker center-align" name="campeonato.rodadas[${r.index}].data" 
+								value="<fmt:formatDate pattern="dd/MM/yyyy" value="${rodada.data.time}" />" />
+							</td>
+							<td><input name="campeonato.rodadas[${r.index}].local" value="${rodada.local}"/></td>
+							<td><input type="number" class="center-align" name="campeonato.rodadas[${r.index}].numeroSeries" value="${rodada.numeroSeries}"/></td>
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
 			</div>
 		</form>
 	</div>
-</body>
-
+</main>
 
 <c:import url="/WEB-INF/jsp/footer.jsp" />

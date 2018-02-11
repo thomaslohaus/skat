@@ -2,6 +2,11 @@
  * Javascript
  */
 
+function copiarTitulo(campoTexto) {
+	var titulo = $(campoTexto).val();
+	$("#titulo").text(titulo);
+}
+
 $("input[type='checkbox']").change(function() {
 	if (this.checked) {
 		incluirJogadorNoCampeonato($(this).attr('id').substring(7));
@@ -75,3 +80,4 @@ function alertHideOnEmpty() {
 $(".close-alert").click(function() {
 	$(this).parent().parent().addClass('hidden');
 });
+

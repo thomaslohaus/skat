@@ -5,7 +5,7 @@
 
 <c:import url="/WEB-INF/jsp/header.jsp" />
 
-<body>
+<main>
 	<div class="container">
 		<div class="row">
 			<div class="col m5">
@@ -25,7 +25,7 @@
 			</div>
 		</div>
 	</div>
-</body>
+</main>
 
 
 <c:import url="/WEB-INF/jsp/footer.jsp" />

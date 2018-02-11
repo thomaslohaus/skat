@@ -22,7 +22,7 @@
 	<body class="cyan">
 		<fmt:setLocale value="${idioma}"/>
 		
-		<div class="container ">
+		<div class="container">
 			<div class="card login-card">
 				<div class="card-content">
 					<form action="${linkTo[LoginController].enviarNovaSenha(null, null, null)}" method="post">

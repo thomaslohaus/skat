@@ -18,30 +18,33 @@
 		
 	<link rel="stylesheet" href="<c:url value="/resources/css/skat.css"/>">
 </head>
-<div class="navbar-fixed ">
-	<ul id="dropdown-user-menu" class="dropdown-content dropdown-menu-list">
-		<li><a>${jogadorLogado.jogador.nomeCompleto}</a></li>
-		<li class="divider"></li>
-		<li><a href="#!">Seus Dados<i class="material-icons left">contacts</i></a></li>
-		<li><a href="#!">Idioma<i class="material-icons left">language</i></a></li>
-		<li class="divider"></li>
-		<li><a href="${linkTo[LoginController].deslogar()}">Logout<i class="material-icons left">exit_to_app</i></a></li>
-	</ul>
-	
-	
-	<nav class="nav-extended cyan">
-		<div class="nav-wrapper">
-			<div class="container">
-				<a href="#" class="brand-logo">Skatturnier</a>
-				<ul id="nav-mobile" class="right hide-on-med-and-down">
-					<li><a href="${linkTo[CampeonatoController].listar()}">Campeonatos</a></li>
-					<li><a href="#">Jogadores</a></li>
-					<li class="divider"></li>
-					<li><a class="dropdown-button nav-border-left" href="#!" data-activates="dropdown-user-menu">${jogadorLogado.jogador.nomeCompleto}<i class="material-icons right">person</i></a></li>
-				</ul>
-			</div>
+
+<body>
+	<header>
+		<div class="navbar-fixed ">
+			<ul id="dropdown-user-menu" class="dropdown-content dropdown-menu-list">
+				<li><a>${jogadorLogado.jogador.nomeCompleto}</a></li>
+				<li class="divider"></li>
+				<li><a href="#!">Seus Dados<i class="material-icons left">contacts</i></a></li>
+				<li><a href="${linkTo[JogadorController].novaSenha()}">Alterar Senha<i class="material-icons left">lock_outline</i></a></li>
+				<li><a href="#!">Idioma<i class="material-icons left">language</i></a></li>
+				<li class="divider"></li>
+				<li><a href="${linkTo[LoginController].deslogar()}">Logout<i class="material-icons left">exit_to_app</i></a></li>
+			</ul>
+			
+			
+			<nav class="nav-extended cyan">
+				<div class="nav-wrapper">
+					<div class="container">
+						<a href="${linkTo[CampeonatoController].listar()}" class="brand-logo">Skatturnier</a>
+						<ul id="nav-mobile" class="right hide-on-med-and-down">
+							<li><a href="${linkTo[CampeonatoController].listar()}">Campeonatos</a></li>
+							<li><a href="#">Jogadores</a></li>
+							<li class="divider"></li>
+							<li><a class="dropdown-button nav-border-left" href="#!" data-activates="dropdown-user-menu">${jogadorLogado.jogador.nomeCompleto}<i class="material-icons right">person</i></a></li>
+						</ul>
+					</div>
+				</div>
+			</nav>
 		</div>
-	</nav>
-</div>
-	
-	
+	</header>		

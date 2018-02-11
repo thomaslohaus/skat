@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,7 +21,7 @@ public class Campeonato {
 	private String sigla;
 	private Calendar dataInicio;
 	private Calendar dataFim;
-	@OneToMany(mappedBy = "campeonato", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy = "campeonato", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	private List<Rodada> rodadas;
 	private int numeroRodadas;
 

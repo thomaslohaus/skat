@@ -5,14 +5,16 @@
 
 <c:import url="/WEB-INF/jsp/header.jsp" />
 
-<body>
+<main>
 	<div class="container">
 		<div class="row valign-wrapper">
 			<div class="col s8">
 				<h2>Campeonatos</h2>
 			</div>
-			<div class="col s4">
-				<a class="btn-floating btn-large waves-effect waves-light pink" href="${linkTo[CampeonatoController].novo()}"><i class="material-icons">add</i></a>
+			<div class="col s4 right-align">
+				<a class="btn-floating btn-large waves-effect waves-light pink" href="${linkTo[CampeonatoController].novo()}">
+					<i class="material-icons">add</i>
+				</a>
 			</div>
 		</div>
 		<div class="row">
@@ -44,7 +46,7 @@
 			</table>
 		</div>
 	</div>
-</body>
+</main>
 
 
 <c:import url="/WEB-INF/jsp/footer.jsp" />

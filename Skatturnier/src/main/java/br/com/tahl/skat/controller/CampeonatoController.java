@@ -9,7 +9,9 @@ import br.com.caelum.vraptor.Result;
 import br.com.caelum.vraptor.view.Results;
 import br.com.tahl.skat.dao.CampeonatoDao;
 import br.com.tahl.skat.dao.JogadorDao;
+import br.com.tahl.skat.dao.RodadaDao;
 import br.com.tahl.skat.model.Campeonato;
+import br.com.tahl.skat.model.Rodada;
 import br.com.tahl.skat.utils.CampeonatoUtils;
 
 /**
@@ -24,15 +26,17 @@ public class CampeonatoController {
 	private Result result;
 	private JogadorDao jogadorDao;
 	private CampeonatoDao campeonatoDao;
+	private RodadaDao rodadaDao;
 
 	public CampeonatoController() {
 	}
 
 	@Inject
-	public CampeonatoController(Result result, JogadorDao jogadorDao, CampeonatoDao campeonatoDao) {
+	public CampeonatoController(Result result, JogadorDao jogadorDao, CampeonatoDao campeonatoDao, RodadaDao rodadaDao) {
 		this.result = result;
 		this.jogadorDao = jogadorDao;
 		this.campeonatoDao = campeonatoDao;
+		this.rodadaDao = rodadaDao;
 	}
 	
 	@Path(value= {"/campeonatos", "/campeonatos/"})
@@ -51,9 +55,17 @@ public class CampeonatoController {
 			result.include("campeonato", campeonatoDao.carregar(id));
 	}
 	
-	public void salvar(Campeonato campeonato) {
-		campeonatoDao.salvar(campeonato);
-		result.redirectTo(this).listar();
+	public void salvar(Campeonato campeonato, String tipo) {
+		if (tipo.equals("salvar")) {
+			for (Rodada rodada : campeonato.getRodadas()) {
+				rodada.setCampeonato(campeonato);
+			}
+			campeonatoDao.salvar(campeonato);
+			result.redirectTo(this).listar();
+		} else if (tipo.equals("rodada")) {
+			result.include("campeonato", campeonato);
+			result.redirectTo(this).info(0);
+		}
 	}
 	
 	@Path(value= {"/campeonato", "/campeonato/"})
@@ -69,10 +81,9 @@ public class CampeonatoController {
 	@Path(value= {"/campeonato/gerenciar/{id}/", "/campeonato/gerenciar/{id}"})
 	public void gerenciar(int id) {
 		Campeonato campeonato = campeonatoDao.carregar(id);
-		CampeonatoUtils utils = new CampeonatoUtils(campeonato);
+		CampeonatoUtils utils = new CampeonatoUtils(campeonato, campeonatoDao);
 		if (!utils.isNumeroDeRodadasValido()) {
 			campeonato = utils.instanciarRodadas();
-			campeonatoDao.salvar(campeonato);
 		}
 		result.include("campeonato", campeonato);
 	}

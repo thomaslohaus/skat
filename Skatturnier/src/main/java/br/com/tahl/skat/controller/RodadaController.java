@@ -14,7 +14,7 @@ import br.com.tahl.skat.reports.ResultadoRodadaJogador;
 import br.com.tahl.skat.reports.utils.ResultadoRodadaUtils;
 
 /**
- * Controller de uma rodada de um campeonato.
+ * Controller de uma rodada de um campeonato e de suas series.
  * 
  * @author Thomas Lohaus
  *

@@ -88,7 +88,7 @@ public class LoginController {
 				senha == null || senha.trim().equals(""))
 				throw new LoginSenhaNuloVazioException();
 			
-			String senhaHash = LoginUtils.getHash(senha);
+			String senhaHash = LoginUtils.getHash(senha.trim());
 			
 			Jogador jogador = jogadorDao.login(login, senhaHash);
 			if (jogador != null) {
@@ -120,23 +120,31 @@ public class LoginController {
 	@Path("/enviarNovaSenha")
 	public void enviarNovaSenha(String login, String tipo, String idioma) throws EmailException, IOException, TemplateException {
 	
-		//TODO encapsular envio
 		Jogador jogador = jogadorDao.obterPorLogin(login);
 		if (jogador != null) {
 			String emailAddress = jogador.getEmail();
 			if (emailAddress != null && !emailAddress.trim().isEmpty()) {
 
-				String emailBody = freemarker.use("teste").with("title", "TESTE").with("usuario", jogador).getContent();
+				String novaSenha = LoginUtils.gerarNovaSenha();
+				jogador.setSenha(LoginUtils.getHash(novaSenha));
+				jogadorDao.salvar(jogador);
+				
+				String emailBody = freemarker.use("emailNovaSenha")
+						.with("txtTitulo", IdiomaUtils.getTraducao("email.senha.txtTitulo", idioma))
+						.with("txtUsuario", IdiomaUtils.getTraducao("email.senha.txtUsuario", idioma))
+						.with("txtDescricao", IdiomaUtils.getTraducao("email.senha.txtDescricao", idioma))
+						.with("txtSenha", IdiomaUtils.getTraducao("email.senha.txtSenha", idioma))
+						.with("login", jogador.getLogin())
+						.with("senha", novaSenha)
+						.getContent();
 				
 				HtmlEmail email = new HtmlEmail();
-				email.setSubject("Skat || Nova Senha");
+				email.setSubject(IdiomaUtils.getTraducao("email.senha.txtAssunto", idioma));
 				email.addTo(emailAddress);
 				email.setHtmlMsg(emailBody);
 				mailer.asyncSend(email);
-				
-				
 
-				result.include("mensagemNovaSenha", "Nova senha enviada por e-mail.");
+				result.include("mensagemNovaSenha", IdiomaUtils.getTraducao("email.senha.msgSenhaEnviadaSucesso", idioma));
 				result.redirectTo(this).login();
 			} else {
 				//TODO

@@ -1,16 +1,13 @@
 package br.com.tahl.skat.tests;
 
-import java.util.Locale;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import br.com.tahl.skat.dao.JogadorDao;
-import br.com.tahl.skat.model.Jogador;
+import br.com.tahl.skat.dao.CampeonatoDao;
+import br.com.tahl.skat.model.Campeonato;
+import br.com.tahl.skat.model.Rodada;
 import br.com.tahl.skat.security.LoginSenhaNuloVazioException;
-import br.com.tahl.skat.utils.LoginUtils;
-import br.com.tahl.skat.utils.idioma.IdiomaUtils;
 
 public class TestDBSkat {
 
@@ -19,11 +16,15 @@ public class TestDBSkat {
 		EntityManagerFactory factory = Persistence.createEntityManagerFactory("default");
 		EntityManager manager = factory.createEntityManager();
 
-		Locale[] l = IdiomaUtils.getLocaleAcceptLanguage("pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7,de-DE;q=0.6,de;q=0.5,de-CH;q=0.4");
+		CampeonatoDao campeonatoDao = new CampeonatoDao(manager);
 		
-		for (Locale locale : l) {
-			System.out.println(locale.getLanguage());
+		Campeonato campeonato = campeonatoDao.carregar(1);
+		
+		for (Rodada rodada : campeonato.getRodadas()) {
+			System.out.println(rodada.getId());
 		}
+		
+		System.out.println("FIM");
 		
 		manager.close();
 		factory.close();
